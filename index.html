@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BleedBuddy.com - Automated PDF Bleed Correction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-cyan': 'hsl(180, 66%, 49%)',
+              'brand-magenta': 'hsl(340, 82%, 52%)',
+              'brand-yellow': 'hsl(51, 100%, 50%)',
+              'brand-key': '#1a202c',
+              'brand-blue': {
+                '50': '#eff6ff',
+                '100': '#dbeafe',
+                '200': '#bfdbfe',
+                '300': '#93c5fd',
+                '400': '#60a5fa',
+                '500': '#3b82f6',
+                '600': '#2563eb',
+                '700': '#1d4ed8',
+                '800': '#1e40af',
+                '900': '#1e3a8a',
+              },
+            }
+          }
+        }
+      }
+    </script>
+    <!-- GLOBAL LIBRARIES: These are loaded globally because they are designed to attach to the window object. -->
+    
+    <!-- PDF.js: Used for reading PDF metadata and rendering pixel-perfect previews on a canvas. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+      // Required for pdf.js to work. It points to the script that handles heavy processing off the main thread.
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js`;
+    </script>
+    
+    <!-- pdf-lib: Used for non-destructive PDF manipulation, such as adding pages, embedding images, and drawing vector crop marks. -->
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/generative-ai",
+    "react": "https://esm.sh/react@18.2.0",
+    "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6.23.1",
+    "@reduxjs/toolkit": "https://esm.sh/@reduxjs/toolkit@2.2.5",
+    "react-redux": "https://esm.sh/react-redux@9.1.2"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-50">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
