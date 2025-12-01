@@ -1,20 +1,36 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# BleedBuddy.com - Automated PDF Prepress
 
-# Run and deploy your AI Studio app
+This is a Full Stack application designed to analyze PDF files and automate bleed correction for the commercial print industry.
 
-This contains everything you need to run your app locally.
+## Architecture
 
-View your app in AI Studio: https://ai.studio/apps/drive/1_JVrVfcmr-3wVIJ5qdj4iFs9wJg-mC3f
+### Frontend
+- **Framework:** React 18
+- **State Management:** Redux Toolkit
+- **Styling:** Tailwind CSS (via CDN)
+- **PDF Processing:** PDF.js + PDF-lib
+- **Entry Point:** `index.html` loads `index.tsx`
 
-## Run Locally
+### Backend
+- **Framework:** Node.js / Express
+- **Location:** `/server` directory
+- **Authentication:** JWT (JSON Web Tokens)
+- **Database:** Currently uses in-memory mock data (ready for MongoDB/Postgres migration).
 
-**Prerequisites:**  Node.js
+## Environment Variables
 
+The application is cloud-ready and relies on the following environment variables:
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**Frontend:**
+- `VITE_API_URL`: The full URL of the deployed backend (e.g., `https://api.bleedbuddy.com`). Defaults to localhost if not set.
+
+**Backend:**
+- `PORT`: The port to listen on (Google Cloud sets this automatically).
+- `JWT_SECRET`: Secret key for signing admin tokens.
+
+## Deployment Instructions (For Developer)
+
+1. **Frontend:** Deploy as a Static Site or via Cloud Run (using Nginx/Vite preview).
+2. **Backend:** Deploy the `/server` folder to Google Cloud Run or App Engine.
+3. **Networking:** Ensure the Frontend `VITE_API_URL` points to the Backend's deployed URL.
+4. **CI/CD:** Connect this repository to Google Cloud Build for automatic deployment on push to `main`.
