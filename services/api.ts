@@ -1,50 +1,59 @@
 // @ts-nocheck
 import { store } from '../store';
 
-// PRODUCTION READY:
-// This checks for an environment variable 'VITE_API_URL' first.
-// If your developer sets this on Google Cloud, the app will use that URL.
-// If not set, it defaults to localhost (good for testing).
-const API_BASE_URL = (import.meta.env && import.meta.env.VITE_API_URL) || 'http://localhost:4000/api';
+// CONFIGURATION
+// Use the environment variable VITE_API_URL if set (e.g. for separate backend hosting).
+// Otherwise, default to an empty string to use relative paths (e.g. '/api/admin/login'),
+// which works automatically when frontend and backend are on the same domain or proxied.
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
-// A helper to get the token from the Redux state
-const getToken = () => {
-    return store.getState().auth.adminToken;
+// HELPER: Get Auth Headers
+const getHeaders = () => {
+    const token = localStorage.getItem('adminToken');
+    return {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+    };
 };
 
-// A helper to handle responses and parsing JSON
+// HELPER: Handle Response & Errors
 const handleResponse = async (response) => {
     if (!response.ok) {
-        // Try to parse the error message from the backend
-        const errorData = await response.json().catch(() => ({ error: 'An unknown network error occurred.' }));
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        // If 401 Unauthorized, clear token (session expired)
+        if (response.status === 401) {
+            localStorage.removeItem('adminToken');
+        }
+
+        // Try to parse error message from server
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || `Request failed (${response.status})`);
     }
     return response.json();
 };
 
-// The core API service object
 export const apiService = {
     // Authentication
     login: async (email, password) => {
-        const response = await fetch(`${API_BASE_URL}/admin/login`, {
+        const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
         return handleResponse(response);
     },
+
     logout: async () => {
-         const response = await fetch(`${API_BASE_URL}/admin/logout`, {
+        const response = await fetch(`${API_BASE_URL}/api/admin/logout`, {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${getToken()}` },
+            headers: getHeaders(),
         });
         return handleResponse(response);
     },
     
-    // Dashboard
+    // Dashboard Data
     getDashboardData: async () => {
-        const response = await fetch(`${API_BASE_URL}/admin/dashboard`, {
-            headers: { 'Authorization': `Bearer ${getToken()}` },
+        const response = await fetch(`${API_BASE_URL}/api/admin/dashboard`, {
+            headers: getHeaders(),
         });
         return handleResponse(response);
     },
@@ -52,14 +61,15 @@ export const apiService = {
     // Users
     getUsers: async (params = {}) => {
         const query = new URLSearchParams(params).toString();
-        const response = await fetch(`${API_BASE_URL}/admin/users?${query}`, {
-            headers: { 'Authorization': `Bearer ${getToken()}` },
+        const response = await fetch(`${API_BASE_URL}/api/admin/users?${query}`, {
+            headers: getHeaders(),
         });
         return handleResponse(response);
     },
+
     getUserById: async (userId) => {
-        const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
-            headers: { 'Authorization': `Bearer ${getToken()}` },
+        const response = await fetch(`${API_BASE_URL}/api/admin/users/${userId}`, {
+            headers: getHeaders(),
         });
         return handleResponse(response);
     },
@@ -67,15 +77,16 @@ export const apiService = {
     // Financials
     getFinancials: async (params = {}) => {
         const query = new URLSearchParams(params).toString();
-        const response = await fetch(`${API_BASE_URL}/admin/financials?${query}`, {
-             headers: { 'Authorization': `Bearer ${getToken()}` },
+        const response = await fetch(`${API_BASE_URL}/api/admin/financials?${query}`, {
+            headers: getHeaders(),
         });
         return handleResponse(response);
     },
+
     refundTransaction: async (txnId) => {
-        const response = await fetch(`${API_BASE_URL}/admin/transactions/${txnId}/refund`, {
+        const response = await fetch(`${API_BASE_URL}/api/admin/transactions/${txnId}/refund`, {
             method: 'POST',
-            headers: { 'Authorization': `Bearer ${getToken()}` },
+            headers: getHeaders(),
         });
         return handleResponse(response);
     }
