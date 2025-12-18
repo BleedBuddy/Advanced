@@ -5,7 +5,9 @@ import { store } from '../store';
 // Use the environment variable VITE_API_URL if set (e.g. for separate backend hosting).
 // Otherwise, default to an empty string to use relative paths (e.g. '/api/admin/login'),
 // which works automatically when frontend and backend are on the same domain or proxied.
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const rawUrl = import.meta.env.VITE_API_URL || '';
+const API_BASE_URL = rawUrl.replace(/\/+$/, ''); // remove trailing slashes
+
 
 // HELPER: Get Auth Headers
 const getHeaders = () => {
