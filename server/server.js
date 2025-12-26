@@ -84,7 +84,7 @@ const authenticateToken = (req, res, next) => {
 // --- ROUTES ---
 
 // 1. Admin Login
-app.post('/api/admin/login', (req, res) => {
+app.post('/admin/login', (req, res) => {
     const { email, password } = req.body;
 
     // Simple credential check
