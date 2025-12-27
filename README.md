@@ -1,6 +1,6 @@
 # BleedBuddy.com - Automated PDF Prepress
 
-This is a Full Stack Application designed to analyze PDF files and automate bleed correction for the commercial print industry.
+This is a Full Stack application designed to analyze PDF files and automate bleed correction for the commercial print industry.
 
 ## Architecture
 
