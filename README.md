@@ -17,7 +17,7 @@ This is a Full Stack application designed to analyze PDF files and automate blee
 - **Authentication:** JWT (JSON Web Tokens)
 - **Database:** Currently uses in-memory mock data (ready for MongoDB/Postgres migration).
 
-## Environment Variables
+## Environment Variables 
 
 The application is cloud-ready and relies on the following environment variables:
 
