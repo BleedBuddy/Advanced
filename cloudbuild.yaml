@@ -1,0 +1,16 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  - name: gcr.io/buildpacks/builder
+    entrypoint: pack
+    args:
+      - build
+      - gcr.io/$PROJECT_ID/github.com/$REPO_NAME:$COMMIT_SHA
+      - --builder
+      - gcr.io/buildpacks/builder
+      - --path
+      - .
+
+images:
+  - gcr.io/$PROJECT_ID/github.com/$REPO_NAME:$COMMIT_SHA
