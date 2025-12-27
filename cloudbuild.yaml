@@ -12,5 +12,16 @@ steps:
       - --path
       - .
 
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - bleedbuddy
+      - --image=gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
+      - --region=us-west2
+      - --platform=managed
+      - --allow-unauthenticated
+
 images:
   - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
