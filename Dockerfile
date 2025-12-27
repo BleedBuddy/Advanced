@@ -7,5 +7,6 @@ ENV PYTHONUNBUFFERED=1
 
 COPY . .
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+
 
