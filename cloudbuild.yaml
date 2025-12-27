@@ -1,5 +1,7 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
-  # Build the Docker image
   - name: gcr.io/cloud-builders/docker
     args:
       - build
@@ -7,7 +9,6 @@ steps:
       - gcr.io/$PROJECT_ID/bleedbuddy
       - .
 
-  # Push the image to Container Registry
   - name: gcr.io/cloud-builders/docker
     args:
       - push
