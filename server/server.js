@@ -4,7 +4,11 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_key_123';
 
 // Middleware
