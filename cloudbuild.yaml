@@ -6,11 +6,11 @@ steps:
     entrypoint: pack
     args:
       - build
-      - gcr.io/$PROJECT_ID/github.com/$REPO_NAME:$COMMIT_SHA
+      - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
       - --builder
       - gcr.io/buildpacks/builder
       - --path
       - .
 
 images:
-  - gcr.io/$PROJECT_ID/github.com/$REPO_NAME:$COMMIT_SHA
+  - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
