@@ -2,8 +2,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-  - name: gcr.io/buildpacks/builder
-    entrypoint: pack
+  - name: gcr.io/cloud-builders/pack
     args:
       - build
       - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
@@ -24,4 +23,5 @@ steps:
       - --allow-unauthenticated
 
 images:
-  - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA 
+  - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
+
