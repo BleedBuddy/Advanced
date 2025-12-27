@@ -1,27 +1,9 @@
-options:
-  logging: CLOUD_LOGGING_ONLY
-
 steps:
-  - name: gcr.io/cloud-builders/pack
-    args:
-      - build
-      - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
-      - --builder
-      - gcr.io/buildpacks/builder
-      - --path
-      - .
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/bleedbuddy', '.']
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    entrypoint: gcloud
-    args:
-      - run
-      - deploy
-      - bleedbuddy
-      - --image=gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
-      - --region=us-west2
-      - --platform=managed
-      - --allow-unauthenticated
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/bleedbuddy']
 
 images:
-  - gcr.io/$PROJECT_ID/advanced:$COMMIT_SHA
-
+  - 'gcr.io/$PROJECT_ID/bleedbuddy'
