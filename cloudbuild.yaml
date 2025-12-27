@@ -1,9 +1,17 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/bleedbuddy', '.']
+  # Build the Docker image
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - gcr.io/$PROJECT_ID/bleedbuddy
+      - .
 
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/bleedbuddy']
+  # Push the image to Container Registry
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/$PROJECT_ID/bleedbuddy
 
 images:
-  - 'gcr.io/$PROJECT_ID/bleedbuddy'
+  - gcr.io/$PROJECT_ID/bleedbuddy
